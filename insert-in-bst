@@ -1,0 +1,55 @@
+// ConsoleApplication1.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include <iostream>
+
+using namespace std;
+
+struct node {
+	int data;
+	struct node* left;
+	struct node* right;
+};
+
+
+void printTree(struct node* root) {
+	if (root == NULL) return;
+	printTree(root->left);
+	cout << root->data << " ";
+	printTree(root->right);
+}
+
+struct node* newNode(int value) {
+	struct node* root = (struct node*)malloc(sizeof(struct node*));
+	root->data = value;
+	root->right = root->left = NULL;
+	return (root);
+}
+
+struct node* insert(struct node*root, int value) {
+
+	if (root == NULL) {
+		return newNode(value);
+	}
+
+	if (value >= root->data) {
+		root->right = insert(root->right, value);
+	}
+	else {
+		root->left = insert(root->left, value);
+	}
+
+	return root;
+}
+int main()
+{
+	struct node* root = NULL;
+	int arr[] = { 10,5,15,3,12,20,6 };
+	root = insert(root, 10);
+	root = insert(root, 5);
+	root = insert(root, 2);
+	root = insert(root, 20);
+	root = insert(root, 19);
+	root = insert(root, 22);
+	printTree(root);
+}
